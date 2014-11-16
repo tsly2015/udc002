@@ -1,24 +1,17 @@
 import webapp2
 
 form="""
-<form method="post" action="/testform">
+<form method="post">
 	<input name="q">
 	<input type="submit">
 </form>
 """
-class MainHandler(webapp2.RequestHandler):
-    def get(self):
-		#self.response.headers['Content-Type'] = 'text/plain'
-		self.response.write(form)
 
-class TestHandler(webapp2.RequestHandler):
+class MainPage(webapp2.RequestHandler):
+	def get(self):
+		self.response.out.write(form)
+
 	def post(self):
-		q = self.request.get("q")
-		self.response.out.write(q)
+		self.response.out.write("dummy")
 
-		#self.response.headers['Content-Type'] = 'text/plain'
-		#self.response.out.write(self.request)
-
-app = webapp2.WSGIApplication([('/', MainHandler),
-								('/testform', TestHandler)],
-								debug=True)
+app = webapp2.WSGIApplication([('/', MainPage)], debug=True)
