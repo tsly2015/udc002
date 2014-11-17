@@ -89,6 +89,12 @@ class MainPage(webapp2.RequestHandler):
 		if not (month and day and year):
 			self.write_form("Not valid", user_month, user_day, user_year)
 		else:
-			self.response.out.write("Done")
+			self.redirect("/thanks")
 
-app = webapp2.WSGIApplication([('/', MainPage)], debug=True)
+class ThanksHandler(webapp2.RequestHandler):
+	def get(self):
+		self.response.out.write("Done")
+
+app = webapp2.WSGIApplication([('/', MainPage),
+								('/thanks', ThanksHandler)],
+								debug=True)
