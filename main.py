@@ -31,6 +31,7 @@ form="""
 	<label>Month <input type="text" name="month"></label>
 	<label>Day <input type="text" name="day"></label>
 	<label>Year <input type="text" name="year"></label>
+	<div style="color: red">%(error)s</div>
 	<br>
 	<br>
 	<input type="submit">
@@ -38,8 +39,11 @@ form="""
 """
 
 class MainPage(webapp2.RequestHandler):
+	def write_form(self, error="", month="", day="", year=""):
+		self.response.out.write(form % {"error": error})
+
 	def get(self):
-		self.response.out.write(form)
+		self.write_form()
 
 	def post(self):
 		user_month = valid_month(self.request.get('month'))
@@ -47,7 +51,7 @@ class MainPage(webapp2.RequestHandler):
 		user_year = valid_year(self.request.get('year'))
 
 		if not (user_month and user_day and user_year):
-			self.response.out.write(form)
+			self.write_form("Not valid")
 		else:
 			self.response.out.write("Done")
 
